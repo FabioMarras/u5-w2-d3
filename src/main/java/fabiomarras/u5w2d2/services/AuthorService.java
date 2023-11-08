@@ -4,6 +4,9 @@ import fabiomarras.u5w2d2.NotFoundException;
 import fabiomarras.u5w2d2.entities.Author;
 import fabiomarras.u5w2d2.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +23,8 @@ public class AuthorService {
     private AuthorRepository authorRepository;
 
     //GET /authorPosts
-    public List<Author> getAuthors() {
+    public List<Author> getAuthors(int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return authorRepository.findAll();
     }
 

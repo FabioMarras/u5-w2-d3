@@ -15,8 +15,8 @@ public class AuthorController {
 
     //GET /authorPosts
     @GetMapping("")
-    public List<Author> getAuthor(){
-        return authorService.getAuthors();
+    public List<Author> getAuthor(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,  @RequestParam(defaultValue = "id") String orderBy){
+        return authorService.getAuthors(page, size, orderBy);
     }
 
     //GET /authorPosts/id

@@ -1,9 +1,14 @@
 package fabiomarras.u5w2d2.services;
 
 import fabiomarras.u5w2d2.NotFoundException;
+import fabiomarras.u5w2d2.entities.Author;
 import fabiomarras.u5w2d2.entities.Blog;
 import fabiomarras.u5w2d2.repositories.BlogsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +24,13 @@ public class BlogsService {
     @Autowired
     private BlogsRepository blogsRepository;
 
+    @Autowired
+    private AuthorService authorService;
+
     //GET /blogPosts
-    public List<Blog> getBlogs() {
-        return blogsRepository.findAll();
+    public Page<Blog> getBlogs(int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return blogsRepository.findAll(pageable);
     }
 
     //GET /blogPosts/id
@@ -30,7 +39,9 @@ public class BlogsService {
     }
 
     //POST /blogPosts - crea
-    public Blog save(Blog body){
+    public Blog save(Blog body) {
+        Author author = authorService.findById(body.getAuthor().getId());
+        body.setAuthor(author);
         return blogsRepository.save(body);
     }
 

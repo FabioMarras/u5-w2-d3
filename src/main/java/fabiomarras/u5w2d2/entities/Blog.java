@@ -1,15 +1,12 @@
 package fabiomarras.u5w2d2.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor
 @Entity
 public class Blog {
     @Id
@@ -21,27 +18,10 @@ public class Blog {
     private String contenuto;
     private int tempoDiLettura;
 
-    public int getId() {
-        return id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "AUTHOR_ID")
+    private Author author;
 
-    public String getCategoria() {
-        return categoria;
-    }
 
-    public String getTitolo() {
-        return titolo;
-    }
 
-    public String getCover() {
-        return cover;
-    }
-
-    public String getContenuto() {
-        return contenuto;
-    }
-
-    public int getTempoDiLettura() {
-        return tempoDiLettura;
-    }
 }
