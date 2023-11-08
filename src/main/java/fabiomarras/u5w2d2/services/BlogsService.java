@@ -1,6 +1,6 @@
 package fabiomarras.u5w2d2.services;
 
-import fabiomarras.u5w2d2.NotFoundException;
+import fabiomarras.u5w2d2.exceptions.NotFoundException;
 import fabiomarras.u5w2d2.entities.Author;
 import fabiomarras.u5w2d2.entities.Blog;
 import fabiomarras.u5w2d2.repositories.BlogsRepository;
@@ -10,8 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class BlogsService {

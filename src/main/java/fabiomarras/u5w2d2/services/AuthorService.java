@@ -1,6 +1,6 @@
 package fabiomarras.u5w2d2.services;
 
-import fabiomarras.u5w2d2.NotFoundException;
+import fabiomarras.u5w2d2.exceptions.NotFoundException;
 import fabiomarras.u5w2d2.entities.Author;
 import fabiomarras.u5w2d2.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
