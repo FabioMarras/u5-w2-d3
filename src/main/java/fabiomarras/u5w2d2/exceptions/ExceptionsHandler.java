@@ -16,16 +16,9 @@ public class ExceptionsHandler {
         e.printStackTrace();
         return new ErrorsPayload("PROBLEMI LATO SERVER", new Date());
     }
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorsPayload handleCustomException(Exception e) {
-        e.printStackTrace();
-        return new ErrorsPayload("BAD REQUEST", new Date());
-    }
     @ExceptionHandler(NotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorsPayload handleCustomException(NotFoundException e) {
-        e.printStackTrace();
-        return new ErrorsPayload("NOT FOUND", new Date());
+    @ResponseStatus(HttpStatus.NOT_FOUND)  // 404
+    public ErrorsPayload handleNotFound(NotFoundException e){
+        return new ErrorsPayload(e.getMessage(), new Date());
     }
 }
