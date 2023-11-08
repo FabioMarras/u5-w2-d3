@@ -2,12 +2,11 @@ package fabiomarras.u5w2d2.services;
 
 import fabiomarras.u5w2d2.NotFoundException;
 import fabiomarras.u5w2d2.entities.Blog;
+import fabiomarras.u5w2d2.repositories.BlogsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Random;
 
 @Service
 public class BlogsService {
@@ -17,66 +16,36 @@ public class BlogsService {
     //PUT /blogPosts/id - modifica
     //DELETE /blogPosts/id - cancella
 
-    private List<Blog> blogs = new ArrayList<>();
+    @Autowired
+    private BlogsRepository blogsRepository;
 
     //GET /blogPosts
-    public List<Blog> getUsers() {
-        return this.blogs;
+    public List<Blog> getBlogs() {
+        return blogsRepository.findAll();
     }
 
     //GET /blogPosts/id
     public Blog findById(int id){
-        Blog b = null;
-        for (Blog blog: this.blogs) {
-            if (blog.getId() == id) {
-                b = blog;
-            }
-        }
-        if(b == null ){
-            throw new NotFoundException(id);
-        } else {
-            return b;
-        }
+      return blogsRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
     //POST /blogPosts - crea
     public Blog save(Blog body){
-        Random rndm = new Random();
-        body.setId(rndm.nextInt(1, 1000));
-        this.blogs.add(body);
-        return body;
+        return blogsRepository.save(body);
     }
 
     //PUT /blogPosts/id - modifica
     public Blog findByIdAndUpdate(int id, Blog body){
-        Blog found = null;
-        for (Blog blog:this.blogs) {
-            if(blog.getId() == id){
-                found = blog;
-                found.setId(id);
-                found.setCategoria(body.getCategoria());
-                found.setTitolo(body.getTitolo());
-                found.setCover(body.getCover());
-                found.setContenuto(body.getContenuto());
-                found.setTempoDiLettura(body.getTempoDiLettura());
-            }
-        }
-        if(found == null ){
-            throw new NotFoundException(id);
-        } else {
-            return found;
-        }
+        Blog blog = this.findById(id);
+        blog.setTitolo(body.getTitolo());
+        blog.setContenuto(body.getContenuto());
+        blog.setTempoDiLettura(body.getTempoDiLettura());
+        return blogsRepository.save(blog);
     }
 
     //DELETE /blogPosts/id - cancella
-    public void findByIdAndDelete(int id){
-        ListIterator<Blog> iterator = this.blogs.listIterator();
-
-        while (iterator.hasNext()){
-            Blog current = iterator.next();
-            if(current.getId() == id){
-                iterator.remove();
-            }
-        }
+    public void findByIdAndDelete(int id) {
+    Blog blog = this.findById(id);
+    blogsRepository.delete(blog);
     }
 }

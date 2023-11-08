@@ -1,9 +1,15 @@
 package fabiomarras.u5w2d2.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.time.LocalDate;
 import java.util.Date;
-
+@Entity
 public class Author {
+    @Id
+    @GeneratedValue
     private int id;
     private String nome;
     private String cognome;

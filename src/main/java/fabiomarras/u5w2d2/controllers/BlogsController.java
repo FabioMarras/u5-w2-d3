@@ -17,7 +17,7 @@ public class BlogsController {
     //GET /blogPosts
     @GetMapping("")
     public List<Blog> getBlogs(){
-        return blogsService.getUsers();
+        return blogsService.getBlogs();
     }
 
     //GET /blogPosts/id

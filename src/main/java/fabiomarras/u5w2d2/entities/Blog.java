@@ -1,5 +1,8 @@
 package fabiomarras.u5w2d2.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,7 +10,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Entity
 public class Blog {
+    @Id
+    @GeneratedValue
     private int id;
     private String categoria;
     private String titolo;
